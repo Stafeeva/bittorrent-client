@@ -21,4 +21,16 @@ describe("Connect", () => {
     expect(net.Socket.prototype.connect).toHaveBeenCalledWith(peer.port, peer.ip);
   });
 
+  // it('should not show an error if the socket connects', () => {
+  //   spyOn(net.Socket.prototype, "on");
+  //   connect(peer);
+  //   expect(net.Socket.prototype.on).not.toHaveBeenCalledWith('error', console.log);
+  // });
+  //
+  // it("should show an error if the socket doesn't connect", () => {
+  //   spyOn(net.Socket.prototype, "on");
+  //   connect();
+  //   expect(net.Socket.prototype.on).toHaveBeenCalledWith('error', console.log);
+  // });
+
 });
