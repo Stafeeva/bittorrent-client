@@ -5,6 +5,10 @@ module.exports.isHandshake = (message) => {
          message.toString('utf8', 1, 20) === 'BitTorrent protocol';
 };
 
+module.exports.isWholeMessage = (data, msgLen) => {
+  return data.length >= 4 && data.length >= msgLen();
+};
+
 module.exports.parse = (message) => {
   const msgId = message.readInt8(4);
   let payload = null;

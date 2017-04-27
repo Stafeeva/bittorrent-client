@@ -50,7 +50,7 @@ describe("Connect", () => {
     spyOn(dummySocket, "on");
 
     connect(peer, dummySocket);
-    expect(dummySocket.on).toHaveBeenCalledWith('data', console.log);
+    expect(dummySocket.on).toHaveBeenCalledWith('data', jasmine.any(Function));
   });
 
   describe("dataHandler", () => {
@@ -62,10 +62,22 @@ describe("Connect", () => {
 
     it('puts the data in a Buffer', ()=>{
       let theCallback = jasmine.createSpy(()=>{});
+      let ip;
+      dummySocket['connect'] = (peer.port, peer.ip, theCallback => {
+        ip = dummySocket.localAddress();
+      });
+      console.log(ip);
+      // let theCallback = ()=>{};
+      // let spySocket = new net.Socket();
       spyOn(Buffer, 'concat');
-      connect.dataHandler(bufferData, theCallback)
+      // spyOn(dummySocket, 'on').andCallFake(theCallback);
+      connect(peer, dummySocket);
       expect(Buffer.concat).toHaveBeenCalledWith([jasmine.any(Object(Buffer)), bufferData]);
     });
+
+    it('', () => {
+
+    })
 
   });
 

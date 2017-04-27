@@ -7,14 +7,25 @@ module.exports = (peer, socket = new net.Socket()) => {
   socket.connect(peer.port, peer.ip, () => {
     socket.write('hello');
   });
-  socket.on('data', console.log);
+  dataHandler(socket, msg => { messageHandler(msg, peer, socket)});
 }
 
-module.exports.dataHandler = (data, callback) => {
+const dataHandler = (socket, callback) => {
   let handshake = true;
-  // to do: delet this
-  let newbuffer = Buffer.alloc(0);
-  let foo = Buffer.concat([newbuffer, data])
-  callback(data);
-  handshake = false;
+  let newBuffer = Buffer.alloc(0);
+
+  socket.on('data', data => {
+
+    const msgLen = () => handshake ? newBuffer.readUInt8(0) : newBuffer.readInt32BE(0) + 4;
+    newBuffer = Buffer.concat([newbuffer, data]);
+
+    // while messageParser.isWholeMessage(data, msgLen) {
+      callback(data);
+      handshake = false;
+    // }
+  });
+
+
 };
+
+module.exports.dataHandler = dataHandler;
