@@ -54,10 +54,10 @@ module.exports.buildRequest = (payload) => {
   return buffer;
 }
 
-module.exports.buildPiece = payload => {
-  const buf = Buffer.alloc(payload.length.length + 13);
+module.exports.buildPiece = (payload, torrent, pieceOfFile, pieceLength) => {
+  const buf = Buffer.alloc(13 + pieceLength);
   // length
-  buf.writeUInt32BE(payload.length.length + 9, 0);
+  buf.writeUInt32BE(9 + pieceLength, 0);
   // id
   buf.writeUInt8(7, 4);
   // piece index
@@ -65,7 +65,7 @@ module.exports.buildPiece = payload => {
   // begin
   buf.writeUInt32BE(payload.begin, 9);
   // block
-  payload.length.copy(buf, 13);
+  pieceOfFile.copy(buf, 13);
   return buf;
 };
 
