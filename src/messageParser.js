@@ -15,6 +15,11 @@ module.exports.parse = (message) => {
     };
     payload[msgId === 7 ? 'block' : 'length'] = message.slice(13);
   }
+  console.log({
+    size : message.readInt32BE(0),
+    id : msgId,
+    payload : payload
+  })
   return {
     size : message.readInt32BE(0),
     id : msgId,
