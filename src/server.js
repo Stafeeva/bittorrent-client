@@ -4,7 +4,7 @@ const message = require('./message')
 const Pieces = require('./Pieces');
 const messageParser = require('./messageParser')
 const fs = require('fs');
-let firstPiece === true;
+let firstPiece = true;
 
 module.exports.startServer = (torrent) => {
     const server = net.createServer(function(c) {
