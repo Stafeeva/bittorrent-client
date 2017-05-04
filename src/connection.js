@@ -65,12 +65,15 @@ function unchokeHandler(socket, pieces, queue) {
 };
 
 function pieceHandler(file, pieceData, torrent, socket, pieces, queue) {
-  console.log('received a piece')
+  process.stdout.clearLine();  // clear current text
+  process.stdout.cursorTo(0);  // move cursor to beginning of line
+  process.stdout.write("Progress: " + parseInt(((pieceData.index + 1)/pieces._received.length)* 100) + "%");
   pieces.addReceived(pieceData)
   const offset = pieceData.index * torrent.info['piece length'] + pieceData.begin;
   fs.write(file, pieceData.block, 0, pieceData.block.length, offset,() => {});
   if (pieces.isComplete()) {
-    console.log(torrent.info.name + " has been fully downloaded.")
+
+    console.log("\n" + torrent.info.name + " has been fully downloaded.")
     socket.end();
     try { fs.closeSync(file); } catch(e) { }
   } else {
