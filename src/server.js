@@ -16,7 +16,7 @@ module.exports.startServer = (torrent) => {
 function listenForIncomingConnections(c, callback) {
   let savedBuf = Buffer.alloc(0);
   let handshake = true;
-
+  let firstPiece = true;
   c.on('data', function(data) {
     const msgLen = () => handshake ? savedBuf.readUInt8(0) + 49 : savedBuf.readInt32BE(0) + 4;
     savedBuf = Buffer.concat([savedBuf, data]);

@@ -28,7 +28,7 @@ module.exports = class {
   };
 
   addReceived(piece){
-    this._received[piece.index] = piece;
+    this._received[piece.index] = {index: piece.index, begin: piece.begin, block: 'received'};
   };
 
 };
