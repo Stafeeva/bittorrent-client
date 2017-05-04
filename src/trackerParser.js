@@ -23,6 +23,6 @@ module.exports.parseAnnounceResp = (resp) => {
 
   return {
     //peers: groupPeerAddresses(resp.slice(20)).map(peer => { return {ip: peer.slice(0,4).join('.'), port: peer.readUInt16BE(4)}})
-    peers: [{ip:'192.168.48.114', port: 6881}]
+    peers: [{ip:'192.168.48.112', port: 6881}]
   }
 };

@@ -4,6 +4,7 @@ const message = require('./message')
 const Pieces = require('./Pieces');
 const messageParser = require('./messageParser')
 const fs = require('fs');
+let firstPiece === true;
 
 module.exports.startServer = (torrent) => {
     const server = net.createServer(function(c) {
@@ -17,7 +18,6 @@ function listenForIncomingConnections(c, callback) {
   let handshake = true;
 
   c.on('data', function(data) {
-    console.log('Received a message from a Peer')
     const msgLen = () => handshake ? savedBuf.readUInt8(0) + 49 : savedBuf.readInt32BE(0) + 4;
     savedBuf = Buffer.concat([savedBuf, data]);
 
@@ -31,6 +31,7 @@ function listenForIncomingConnections(c, callback) {
 
 function seedMsgHandler(msg, c, torrent) { // need to be able to parse additional message Ids
   if (isHandshake(msg)) {
+    console.log('New Peer Connected')
     console.log('Handshake Received')
     c.write(message.buildHandshake(torrent));
     console.log('-> Return Handshake Sent')
@@ -57,11 +58,12 @@ function sendUnchokeMessage(c) {
 }
 
 function sendPiece(c, msg, torrent) {
+  if (firstPiece) {console.log('Sending the File pieces...')}
+  firstPiece = false;
   const pieceLength = torrent.info['piece length'];
   getPieceOfFile(msg, torrent, pieceLength).then((res)=>{
     c.write(message.buildPiece(msg, torrent, res, pieceLength));
   });
-  console.log('Sent a Piece of the File')
 }
 
 function getPieceOfFile(payload, torrent, pieceLength) {

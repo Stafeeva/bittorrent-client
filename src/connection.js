@@ -65,6 +65,7 @@ function unchokeHandler(socket, pieces, queue) {
 };
 
 function pieceHandler(file, pieceData, torrent, socket, pieces, queue) {
+  console.log('received a piece')
   const offset = pieceData.index * torrent.info['piece length'] + pieceData.begin;
   fs.write(file, pieceData.block, 0, pieceData.block.length, offset,() => {});
   if (pieces.isComplete()) {
