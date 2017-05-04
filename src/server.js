@@ -18,7 +18,6 @@ function listenForIncomingConnections(c, callback) {
   let handshake = true;
   let firstPiece = true;
   c.on('data', function(data) {
-    if (data = "disconnect") {console.log("Peer disconnected."); break;}
     const msgLen = () => handshake ? savedBuf.readUInt8(0) + 49 : savedBuf.readInt32BE(0) + 4;
     savedBuf = Buffer.concat([savedBuf, data]);
 
