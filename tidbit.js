@@ -7,7 +7,7 @@ const fs = require('fs')
 let fileSize;
 
 try {
-  fileSize = fs.statSync("./" + torrent.info.name).size;
+  fileSize = fs.statSync("./tidbit_downloads/" + torrent.info.name).size;
 } catch(e) {
   fileSize = 0;
 }
@@ -17,7 +17,7 @@ if (fileSize >= torrent.info.length) {
   console.log("Seeding " + torrent.info.name + "...")
   server.startServer(torrent);
 } else {
-  const download = new Download(torrent, torrent.info.name);
+  const download = new Download(torrent, "./tidbit_downloads/" + torrent.info.name);
   console.log("Downloading " + torrent.info.name + "...")
   download.start();
 }
