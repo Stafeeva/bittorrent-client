@@ -69,6 +69,7 @@ function pieceHandler(file, pieceData, torrent, socket, pieces, queue) {
   const offset = pieceData.index * torrent.info['piece length'] + pieceData.begin;
   fs.write(file, pieceData.block, 0, pieceData.block.length, offset,() => {});
   if (pieces.isComplete()) {
+    console.log(torrent.info.name + " has been fully downloaded.")
     socket.end();
     try { fs.closeSync(file); } catch(e) { }
   } else {
