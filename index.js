@@ -18,5 +18,6 @@ if (fileSize >= torrent.info.length) {
   server.startServer(torrent);
 } else {
   const download = new Download(torrent, torrent.info.name);
+  console.log("Downloading " + torrent.info.name + "...")
   download.start();
 }
