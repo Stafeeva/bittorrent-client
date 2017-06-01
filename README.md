@@ -1,5 +1,9 @@
 ## Tidbit Torrent Client ##
 
+TidBit Torrent Client is a command line application. It can download files and also supports sharing.
+
+![DEMO](https://youtu.be/oUcVF9sSBvk)
+
 ### Approach ###
 
 - Minimum Viable Product: "A client that downloads a file from a single peer, using the BitTorrent Protocol"
